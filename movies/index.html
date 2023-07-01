@@ -1,0 +1,34 @@
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Schedule</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>Movie Schedule</h1>
+
+    <div class="filters">
+        <form method="get">
+            <label for="genreFilter">Filter by Genre:</label>
+            <select id="genreFilter" name="genre" multiple>
+                {% for genre in genres %}
+                    <option value="{{ genre }}" {% if genre in genre_filter %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <label for="searchQuery">Search by Title:</label>
+            <input type="text" id="searchQuery" name="search" value="{{ search_query }}">
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+
+    <div class="movie-list">
+        {% for movie in movies %}
+            <div class="movie">
+                <h2>{{ movie.title }}</h2>
+                <img src="{{ movie.poster }}" alt="{{ movie.title }}" width="200">
+                <p>Genre(s): {{ movie.genres|join:", " }}</p>
+                <p>Rating: {{ movie.rating }}</p>
+                <p>Year Release: {{ movie.yearRelease }}</p>
+                <p>
